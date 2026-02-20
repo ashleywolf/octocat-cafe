@@ -12,7 +12,7 @@ A GitHub-themed café menu app — where every commit comes with a cup of coffee
 
 **[ashleywolf.github.io/octocat-cafe](https://ashleywolf.github.io/octocat-cafe/)**
 
-![Octocat Café Screenshot](https://via.placeholder.com/800x400/0d1117/58a6ff?text=☕+Octocat+Café+—+Menu+Preview)
+> ☕ **Merge Conflict Mocha** · 🍩 **Dependabot Donut** · ⚡ **Actions Espresso** · 🥧 **SSH Key Lime Pie** · 🍜 **README Ramen**
 
 ## 📋 Menu Preview
 
