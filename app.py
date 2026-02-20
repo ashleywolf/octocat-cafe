@@ -31,4 +31,9 @@ def api_menu_category(category):
 
 
 if __name__ == "__main__":
+    print("\n  ☕ Octocat Café")
+    print("  ═══════════════")
+    print("  Now brewing on http://localhost:5000")
+    print()
+    print("  Today's special: Release Candidate Croissant 🥐\n")
     app.run(debug=True)

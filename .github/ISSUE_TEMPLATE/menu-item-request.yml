@@ -1,0 +1,62 @@
+name: "☕ Request a Menu Item"
+description: Suggest a new item for the Octocat Café menu
+title: "[Menu Request]: "
+labels: ["menu-request"]
+body:
+  - type: input
+    id: name
+    attributes:
+      label: Item Name
+      description: What should we call this delicious creation?
+      placeholder: e.g. "Revert Ravioli"
+    validations:
+      required: true
+  - type: dropdown
+    id: emoji
+    attributes:
+      label: Emoji
+      description: Pick an emoji that represents your item
+      options:
+        - ☕
+        - 🍵
+        - 🥤
+        - 🍰
+        - 🍩
+        - 🍪
+        - 🥐
+        - 🍞
+        - 🧁
+        - 🍕
+        - 🌮
+        - 🍜
+        - 🥧
+        - 🧇
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Describe the item and why it belongs on the menu
+      placeholder: A witty, GitHub-themed description
+    validations:
+      required: true
+  - type: input
+    id: price
+    attributes:
+      label: Price Suggestion
+      description: How much should this item cost?
+      placeholder: e.g. "$5.50"
+    validations:
+      required: false
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      description: Where does this item belong on the menu?
+      options:
+        - drinks
+        - snacks
+        - specials
+    validations:
+      required: true

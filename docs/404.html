@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" data-color-mode="dark" data-dark-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 — Octocat Café ☕</title>
+    <link href="https://unpkg.com/@primer/css@21/dist/primer.css" rel="stylesheet" />
+    <style>
+        .big-404 { font-size: 8rem; font-weight: 800; line-height: 1; }
+        .float-coffee { animation: float 3s ease-in-out infinite; display: inline-block; }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body class="color-bg-default">
+    <div class="d-flex flex-column flex-items-center flex-justify-center text-center p-6" style="min-height: 100vh;">
+        <div class="mb-3">
+            <span class="big-404 color-fg-default">4<span class="float-coffee">☕</span>4</span>
+        </div>
+        <h1 class="h2 color-fg-default mb-2">This menu item was deleted in a force push</h1>
+        <p class="f3 color-fg-muted mb-4">Looks like someone ran <code>git reset --hard</code> on this page</p>
+        <a href="./" class="btn btn-primary btn-large">Back to the Menu</a>
+    </div>
+</body>
+</html>
