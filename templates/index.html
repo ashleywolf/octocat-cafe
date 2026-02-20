@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Octocat Café ☕</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 600px; margin: 40px auto; padding: 0 20px; background: #0d1117; color: #e6edf3; }
+        h1 { text-align: center; font-size: 2em; }
+        h2 { color: #58a6ff; border-bottom: 1px solid #30363d; padding-bottom: 8px; }
+        .item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #21262d; }
+        .item-name { font-weight: 600; }
+        .item-desc { color: #8b949e; font-size: 0.9em; }
+        .item-price { color: #3fb950; font-weight: 600; }
+        .emoji { font-size: 1.3em; margin-right: 8px; }
+    </style>
+</head>
+<body>
+    <h1>☕ Octocat Café</h1>
+
+    <h2>🥤 Drinks</h2>
+    {% for item in drinks %}
+    <div class="item">
+        <div>
+            <span class="emoji">{{ item.emoji }}</span>
+            <span class="item-name">{{ item.name }}</span>
+            <div class="item-desc">{{ item.description }}</div>
+        </div>
+        <span class="item-price">${{ "%.2f"|format(item.price) }}</span>
+    </div>
+    {% endfor %}
+
+    <h2>🍪 Snacks</h2>
+    {% for item in snacks %}
+    <div class="item">
+        <div>
+            <span class="emoji">{{ item.emoji }}</span>
+            <span class="item-name">{{ item.name }}</span>
+            <div class="item-desc">{{ item.description }}</div>
+        </div>
+        <span class="item-price">${{ "%.2f"|format(item.price) }}</span>
+    </div>
+    {% endfor %}
+</body>
+</html>
