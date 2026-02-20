@@ -7,21 +7,80 @@
     <link href="https://unpkg.com/@primer/css@21/dist/primer.css" rel="stylesheet" />
     <style>
         .menu-item-emoji { font-size: 1.5em; min-width: 36px; text-align: center; }
-        .menu-card:hover { border-color: var(--borderColor-accent-emphasis) !important; }
-        .hero-octocat { font-size: 4em; }
+        .menu-card { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .menu-card:hover {
+            transform: translateY(-2px) scale(1.01);
+            box-shadow: 0 4px 20px rgba(88, 166, 255, 0.15);
+            border-color: var(--borderColor-accent-emphasis) !important;
+        }
+        .hero-octocat { font-size: 5em; animation: float 3s ease-in-out infinite; }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        @keyframes pulse-badge {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        .badge-open { animation: pulse-badge 2s ease-in-out infinite; }
+        .order-btn { transition: transform 0.15s ease; }
+        .order-btn:hover { transform: scale(1.05); }
+        .flash-banner { animation: slideDown 0.5s ease-out; }
+        @keyframes slideDown {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
     </style>
 </head>
 <body class="color-bg-default">
-    <!-- Header -->
+    <!-- Flash Banner -->
+    <div class="flash flash-banner color-bg-accent-emphasis p-2 text-center" style="border-radius: 0;">
+        <span class="f5">🎉 <strong>New items on the menu!</strong> Check out our Daily Specials below</span>
+    </div>
+
+    <!-- Hero Header -->
     <div class="color-bg-subtle border-bottom">
-        <div class="container-md p-4 p-md-5 text-center">
-            <div class="hero-octocat mb-2">☕</div>
-            <h1 class="h1-mktg color-fg-default mb-1">Octocat Café</h1>
-            <p class="f3 color-fg-muted">A GitHub-themed café for developers who run on coffee and code</p>
+        <div class="container-md p-5 p-md-6 text-center">
+            <div class="d-inline-flex flex-items-center mb-3">
+                <span class="Label Label--success badge-open f5 px-3 py-1" style="font-weight: 600;">✨ Now Open</span>
+            </div>
+            <div class="hero-octocat mb-3">☕</div>
+            <h1 class="h0-mktg color-fg-default mb-2">Octocat Café</h1>
+            <p class="f2 color-fg-muted mb-3">Where every commit comes with a cup of coffee</p>
+            <p class="f4 color-fg-subtle"><code>git clone deliciousness && npm run brew</code></p>
         </div>
     </div>
 
     <div class="container-md p-4 p-md-5">
+        <!-- Daily Specials -->
+        <div class="mb-5">
+            <div class="d-flex flex-items-center mb-3">
+                <span class="f2 mr-2">☀️</span>
+                <h2 class="h3 color-fg-default mb-0">Daily Specials</h2>
+                <span class="Counter ml-2">{{ specials|length }}</span>
+                <span class="Label Label--accent ml-2">Limited Run</span>
+            </div>
+            <div class="d-flex flex-column" style="gap: 12px;">
+                {% for item in specials %}
+                <div class="Box menu-card p-3 color-bg-subtle rounded-2">
+                    <div class="d-flex flex-items-center flex-justify-between flex-wrap" style="gap: 8px;">
+                        <div class="d-flex flex-items-start flex-1">
+                            <span class="menu-item-emoji mr-3">{{ item.emoji }}</span>
+                            <div>
+                                <span class="text-bold f4 color-fg-default">{{ item.name }}</span>
+                                <p class="color-fg-muted mb-0 mt-1">{{ item.description }}</p>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-items-center" style="gap: 8px;">
+                            <span class="Label Label--accent Label--large" style="white-space: nowrap;">${{ "%.2f"|format(item.price) }}</span>
+                            <button class="btn btn-sm btn-primary order-btn" onclick="this.textContent='✓ Added!'; this.disabled=true; this.classList.add('btn-outline');">Order</button>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
         <!-- Drinks -->
         <div class="mb-5">
             <div class="d-flex flex-items-center mb-3">
@@ -32,15 +91,18 @@
             <div class="d-flex flex-column" style="gap: 12px;">
                 {% for item in drinks %}
                 <div class="Box menu-card p-3 color-bg-subtle rounded-2">
-                    <div class="d-flex flex-items-center flex-justify-between">
-                        <div class="d-flex flex-items-start">
+                    <div class="d-flex flex-items-center flex-justify-between flex-wrap" style="gap: 8px;">
+                        <div class="d-flex flex-items-start flex-1">
                             <span class="menu-item-emoji mr-3">{{ item.emoji }}</span>
                             <div>
                                 <span class="text-bold f4 color-fg-default">{{ item.name }}</span>
                                 <p class="color-fg-muted mb-0 mt-1">{{ item.description }}</p>
                             </div>
                         </div>
-                        <span class="Label Label--success Label--large ml-3" style="white-space: nowrap;">${{ "%.2f"|format(item.price) }}</span>
+                        <div class="d-flex flex-items-center" style="gap: 8px;">
+                            <span class="Label Label--success Label--large" style="white-space: nowrap;">${{ "%.2f"|format(item.price) }}</span>
+                            <button class="btn btn-sm btn-primary order-btn" onclick="this.textContent='✓ Added!'; this.disabled=true; this.classList.add('btn-outline');">Order</button>
+                        </div>
                     </div>
                 </div>
                 {% endfor %}
@@ -57,15 +119,18 @@
             <div class="d-flex flex-column" style="gap: 12px;">
                 {% for item in snacks %}
                 <div class="Box menu-card p-3 color-bg-subtle rounded-2">
-                    <div class="d-flex flex-items-center flex-justify-between">
-                        <div class="d-flex flex-items-start">
+                    <div class="d-flex flex-items-center flex-justify-between flex-wrap" style="gap: 8px;">
+                        <div class="d-flex flex-items-start flex-1">
                             <span class="menu-item-emoji mr-3">{{ item.emoji }}</span>
                             <div>
                                 <span class="text-bold f4 color-fg-default">{{ item.name }}</span>
                                 <p class="color-fg-muted mb-0 mt-1">{{ item.description }}</p>
                             </div>
                         </div>
-                        <span class="Label Label--success Label--large ml-3" style="white-space: nowrap;">${{ "%.2f"|format(item.price) }}</span>
+                        <div class="d-flex flex-items-center" style="gap: 8px;">
+                            <span class="Label Label--success Label--large" style="white-space: nowrap;">${{ "%.2f"|format(item.price) }}</span>
+                            <button class="btn btn-sm btn-primary order-btn" onclick="this.textContent='✓ Added!'; this.disabled=true; this.classList.add('btn-outline');">Order</button>
+                        </div>
                     </div>
                 </div>
                 {% endfor %}
@@ -73,11 +138,15 @@
         </div>
 
         <!-- Footer -->
-        <div class="border-top pt-3 text-center">
+        <div class="border-top pt-4 mt-4 text-center">
+            <p class="f5 color-fg-muted mb-2">
+                🕐 <strong>Operating Hours:</strong> 24/7 — We never sleep (just like CI/CD)
+            </p>
             <p class="color-fg-muted f6">
                 Made with 💜 by
                 <a href="https://github.com/ashleywolf/octocat-cafe" class="Link">ashleywolf/octocat-cafe</a>
                 · Powered by <span class="Label Label--accent">Copilot</span>
+                · Served fresh on <span class="Label Label--success">GitHub Pages</span>
             </p>
         </div>
     </div>

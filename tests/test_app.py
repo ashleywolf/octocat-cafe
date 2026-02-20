@@ -47,9 +47,10 @@ def test_api_menu_invalid_category(client):
 def test_get_menu():
     """Test get_menu returns all items."""
     menu = get_menu()
-    assert len(menu) == 6
+    assert len(menu) == 15
     names = [item["name"] for item in menu]
     assert "Copilot Crunch Cookie" in names
+    assert "SSH Key Lime Pie" in names
 
 
 def test_get_item():

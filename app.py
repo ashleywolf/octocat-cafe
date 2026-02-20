@@ -11,7 +11,8 @@ def index():
     """Render the menu page."""
     drinks = get_by_category("drinks")
     snacks = get_by_category("snacks")
-    return render_template("index.html", drinks=drinks, snacks=snacks)
+    specials = get_by_category("specials")
+    return render_template("index.html", drinks=drinks, snacks=snacks, specials=specials)
 
 
 @app.route("/api/menu")
