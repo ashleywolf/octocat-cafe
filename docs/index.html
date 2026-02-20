@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" data-color-mode="dark" data-dark-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Octocat Café ☕</title>
+    <link href="https://unpkg.com/@primer/css@21/dist/primer.css" rel="stylesheet" />
+    <style>
+        .menu-item-emoji { font-size: 1.5em; min-width: 36px; text-align: center; }
+        .menu-card:hover { border-color: var(--borderColor-accent-emphasis) !important; }
+        .hero-octocat { font-size: 4em; }
+    </style>
+</head>
+<body class="color-bg-default">
+    <!-- Header -->
+    <div class="color-bg-subtle border-bottom">
+        <div class="container-md p-4 p-md-5 text-center">
+            <div class="hero-octocat mb-2">☕</div>
+            <h1 class="h1-mktg color-fg-default mb-1">Octocat Café</h1>
+            <p class="f3 color-fg-muted">A GitHub-themed café for developers who run on coffee and code</p>
+        </div>
+    </div>
+
+    <div class="container-md p-4 p-md-5">
+        <!-- Drinks -->
+        <div class="mb-5">
+            <div class="d-flex flex-items-center mb-3">
+                <span class="f2 mr-2">🥤</span>
+                <h2 class="h3 color-fg-default mb-0">Drinks</h2>
+                <span class="Counter ml-2" id="drinks-count"></span>
+            </div>
+            <div id="drinks-list" class="d-flex flex-column" style="gap: 12px;"></div>
+        </div>
+
+        <!-- Snacks -->
+        <div class="mb-5">
+            <div class="d-flex flex-items-center mb-3">
+                <span class="f2 mr-2">🍪</span>
+                <h2 class="h3 color-fg-default mb-0">Snacks</h2>
+                <span class="Counter ml-2" id="snacks-count"></span>
+            </div>
+            <div id="snacks-list" class="d-flex flex-column" style="gap: 12px;"></div>
+        </div>
+
+        <!-- Footer -->
+        <div class="border-top pt-3 text-center">
+            <p class="color-fg-muted f6">
+                Made with 💜 by
+                <a href="https://github.com/ashleywolf/octocat-cafe" class="Link">ashleywolf/octocat-cafe</a>
+                · Powered by <span class="Label Label--accent">Copilot</span>
+            </p>
+        </div>
+    </div>
+
+    <script>
+    const menu = [
+        { name: "Merge Conflict Mocha", emoji: "☕", description: "Two flavors that somehow work together", price: 6.00, category: "drinks" },
+        { name: "Git Blame Brew", emoji: "🫖", description: "Find out who made this delicious tea", price: 3.50, category: "drinks" },
+        { name: "Rebase Refresher", emoji: "🥤", description: "Start fresh with every sip", price: 4.00, category: "drinks" },
+        { name: "Copilot Crunch Cookie", emoji: "🍪", description: "AI-assisted baking at its finest", price: 4.50, category: "snacks" },
+        { name: "404 Not Found Cake", emoji: "🍰", description: "You'll never see it coming", price: 7.50, category: "snacks" },
+        { name: "Pull Request Pudding", emoji: "🧁", description: "Always ready for review", price: 5.00, category: "snacks" },
+    ];
+
+    function renderItems(category, listId, countId) {
+        const items = menu.filter(i => i.category === category);
+        document.getElementById(countId).textContent = items.length;
+        document.getElementById(listId).innerHTML = items.map(item => `
+            <div class="Box menu-card p-3 color-bg-subtle rounded-2">
+                <div class="d-flex flex-items-center flex-justify-between">
+                    <div class="d-flex flex-items-start">
+                        <span class="menu-item-emoji mr-3">${item.emoji}</span>
+                        <div>
+                            <span class="text-bold f4 color-fg-default">${item.name}</span>
+                            <p class="color-fg-muted mb-0 mt-1">${item.description}</p>
+                        </div>
+                    </div>
+                    <span class="Label Label--success Label--large ml-3" style="white-space: nowrap;">$${item.price.toFixed(2)}</span>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    renderItems('drinks', 'drinks-list', 'drinks-count');
+    renderItems('snacks', 'snacks-list', 'snacks-count');
+    </script>
+</body>
+</html>
