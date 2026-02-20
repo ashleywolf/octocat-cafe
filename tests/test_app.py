@@ -62,3 +62,12 @@ def test_get_item():
 def test_get_item_not_found():
     """Test that missing items return None."""
     assert get_item("Nonexistent Item") is None
+
+
+def test_dependabot_donut():
+    """Test that Dependabot Donut is on the menu."""
+    item = get_item("Dependabot Donut")
+    assert item is not None
+    assert item["emoji"] == "🍩"
+    assert item["price"] == 4.00
+    assert item["category"] == "snacks"
