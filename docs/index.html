@@ -35,9 +35,37 @@
             from { transform: translateY(-100%); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
         }
+        .emoji-rain { position: fixed; font-size: 2em; pointer-events: none; z-index: 999; animation: fall linear forwards; }
+        @keyframes fall {
+            0% { opacity: 1; transform: translateY(0) rotate(0deg); }
+            100% { opacity: 0; transform: translateY(100vh) rotate(720deg); }
+        }
+        .order-toast {
+            position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+            z-index: 1000; animation: toastIn 0.3s ease-out;
+        }
+        @keyframes toastIn {
+            from { transform: translateX(-50%) translateY(100px); opacity: 0; }
+            to { transform: translateX(-50%) translateY(0); opacity: 1; }
+        }
+        .cart-counter { 
+            position: fixed; top: 16px; right: 16px; z-index: 1000;
+            font-size: 1.2em; transition: transform 0.2s ease;
+        }
+        .cart-counter.bump { animation: cartBump 0.3s ease; }
+        @keyframes cartBump {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+            100% { transform: scale(1); }
+        }
     </style>
 </head>
 <body class="color-bg-default">
+    <!-- Cart Counter -->
+    <div class="cart-counter Box color-bg-subtle px-3 py-2 rounded-2" id="cart">
+        🛒 <span id="cart-count">0</span> items
+    </div>
+
     <!-- Flash Banner -->
     <div class="flash flash-banner color-bg-accent-emphasis p-2 text-center" style="border-radius: 0;">
         <span class="f5">🎉 <strong>New items on the menu!</strong> Check out our Daily Specials below</span>
@@ -140,7 +168,7 @@
                     </div>
                     <div class="d-flex flex-items-center" style="gap: 8px;">
                         <span class="Label ${isSpecial ? 'Label--accent' : 'Label--success'} Label--large" style="white-space: nowrap;">$${item.price.toFixed(2)}</span>
-                        <button class="btn btn-sm btn-primary order-btn" onclick="this.textContent='✓ Added!'; this.disabled=true; this.classList.add('btn-outline');">Order</button>
+                        <button class="btn btn-sm btn-primary order-btn" onclick="orderItem(this, '${item.emoji}', '${item.name}')">Order</button>
                     </div>
                 </div>
             </div>
@@ -150,6 +178,55 @@
     renderItems('specials', 'specials-list', 'specials-count');
     renderItems('drinks', 'drinks-list', 'drinks-count');
     renderItems('snacks', 'snacks-list', 'snacks-count');
+
+    let cartCount = 0;
+    const orderMessages = [
+        "is brewing! ☕",
+        "coming right up!",
+        "has been deployed to your table 🚀",
+        "is in the pipeline!",
+        "— PR approved, merging to stomach 🍽️",
+        "— build passing, shipping now! ✅",
+        "— lgtm! 👍",
+    ];
+
+    function orderItem(btn, emoji, name) {
+        // Update button
+        btn.textContent = '✓ Ordered!';
+        btn.disabled = true;
+        btn.classList.remove('btn-primary');
+        btn.classList.add('btn-outline');
+
+        // Update cart
+        cartCount++;
+        const cart = document.getElementById('cart');
+        document.getElementById('cart-count').textContent = cartCount;
+        cart.classList.remove('bump');
+        void cart.offsetWidth;
+        cart.classList.add('bump');
+
+        // Emoji rain
+        for (let i = 0; i < 8; i++) {
+            setTimeout(() => {
+                const em = document.createElement('div');
+                em.className = 'emoji-rain';
+                em.textContent = emoji;
+                em.style.left = (Math.random() * 90 + 5) + '%';
+                em.style.top = '-50px';
+                em.style.animationDuration = (1.5 + Math.random() * 2) + 's';
+                document.body.appendChild(em);
+                setTimeout(() => em.remove(), 4000);
+            }, i * 100);
+        }
+
+        // Toast notification
+        const msg = orderMessages[Math.floor(Math.random() * orderMessages.length)];
+        const toast = document.createElement('div');
+        toast.className = 'order-toast Flash flash-success p-3 rounded-2';
+        toast.innerHTML = `<strong>${emoji} ${name}</strong> ${msg}`;
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 3000);
+    }
     </script>
 </body>
 </html>
