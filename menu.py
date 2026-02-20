@@ -43,6 +43,20 @@ MENU_ITEMS = [
         "price": 4.00,
         "category": "drinks",
     },
+    {
+        "name": "Stale Branch Strudel",
+        "emoji": "🥐",
+        "description": "Been sitting around for a while but still good",
+        "price": 5.50,
+        "category": "snacks",
+    },
+    {
+        "name": "CI/CD Cold Brew",
+        "emoji": "🧊",
+        "description": "Continuously integrated into your morning",
+        "price": 5.00,
+        "category": "drinks",
+    },
 ]
 
 
