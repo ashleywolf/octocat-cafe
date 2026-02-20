@@ -62,3 +62,13 @@ def get_item(name):
         if item["name"].lower() == name.lower():
             return item
     return None
+
+
+# Added in PR: Add Dependabot Donut
+MENU_ITEMS.append({
+    "name": "Dependabot Donut",
+    "emoji": "🍩",
+    "description": "Automatically keeps your hunger updated",
+    "price": 4.00,
+    "category": "snacks",
+})
